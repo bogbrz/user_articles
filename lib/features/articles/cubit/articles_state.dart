@@ -1,13 +1,10 @@
 part of 'articles_cubit.dart';
 
-class ArticlesState {
-  ArticlesState({
-    this.results = const [],
-    this.status = Status.initial,
-    this.errorMessage,
-  });
-
-  final List<ArticleModel> results;
-  final Status status;
-  final String? errorMessage;
+@freezed
+class ArticlesState with _$ArticlesState {
+  factory ArticlesState({
+    required Status status,
+    required String? errorMessage,
+    required List<ArticleModel> results,
+  }) = _ArticlesState;
 }
