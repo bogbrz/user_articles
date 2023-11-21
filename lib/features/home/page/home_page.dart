@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_articles/app/core/enums.dart';
-import 'package:user_articles/data/remote_data_sources/authors_remote_data_source.dart';
+import 'package:user_articles/app/injection_container.dart';
 import 'package:user_articles/domain/models/author_model.dart';
-import 'package:user_articles/domain/repositories/authors_repository.dart';
 import 'package:user_articles/features/articles/page/articles_page.dart';
 import 'package:user_articles/features/home/cubit/home_cubit.dart';
 
@@ -17,11 +16,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider<HomeCubit>(
         create: (context) {
-          return HomeCubit(
-            authorsRepository: AuthorsRepository(
-              remoteDataSource: AuthorsRemoteDioDataSource(),
-            ),
-          )..start();
+          return getIt<HomeCubit>()..start();
         },
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
@@ -64,9 +59,11 @@ class _AuthorItemWidget extends StatelessWidget {
   const _AuthorItemWidget({
     Key? key,
     required this.model,
+  
   }) : super(key: key);
 
   final AuthorModel model;
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +76,10 @@ class _AuthorItemWidget extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (_) => ArticlesPage(author: model),
+              builder: (_) => ArticlesPage(
+                author: model,
+        
+              ),
             ),
           );
         },

@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:user_articles/app/core/enums.dart';
 import 'package:user_articles/domain/models/author_model.dart';
 import 'package:user_articles/domain/repositories/authors_repository.dart';
 
 part 'home_state.dart';
 part 'home_cubit.freezed.dart';
-
+@injectable
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({required this.authorsRepository})
-      : super(HomeState(status: Status.initial, errorMessage: '', results: []));
+  HomeCubit({required this.authorsRepository}) : super(HomeState(errorMessage: null, results: [], status: Status.initial));
 
   final AuthorsRepository authorsRepository;
 
@@ -17,20 +17,27 @@ class HomeCubit extends Cubit<HomeState> {
     emit(
       HomeState(
         status: Status.loading,
-        errorMessage: '',
-        results: [],
+        errorMessage: null,
+        results: []
       ),
     );
     await Future.delayed(const Duration(seconds: 1));
     try {
       final results = await authorsRepository.getAuthorModels();
       emit(
-        HomeState(status: Status.success, results: results, errorMessage: ''),
+        HomeState(
+          status: Status.success,
+          results: results,
+          errorMessage: null
+        ),
       );
     } catch (error) {
       emit(
         HomeState(
-            status: Status.error, errorMessage: error.toString(), results: []),
+          status: Status.error,
+          errorMessage: error.toString(),
+          results: [],
+        ),
       );
     }
   }

@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ArticlesState {
+  List<ArticleModel> get results => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  List<ArticleModel> get results => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ArticlesStateCopyWith<ArticlesState> get copyWith =>
@@ -31,7 +31,7 @@ abstract class $ArticlesStateCopyWith<$Res> {
           ArticlesState value, $Res Function(ArticlesState) then) =
       _$ArticlesStateCopyWithImpl<$Res, ArticlesState>;
   @useResult
-  $Res call({Status status, String? errorMessage, List<ArticleModel> results});
+  $Res call({List<ArticleModel> results, Status status, String? errorMessage});
 }
 
 /// @nodoc
@@ -47,11 +47,15 @@ class _$ArticlesStateCopyWithImpl<$Res, $Val extends ArticlesState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? results = null,
     Object? status = null,
     Object? errorMessage = freezed,
-    Object? results = null,
   }) {
     return _then(_value.copyWith(
+      results: null == results
+          ? _value.results
+          : results // ignore: cast_nullable_to_non_nullable
+              as List<ArticleModel>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -60,10 +64,6 @@ class _$ArticlesStateCopyWithImpl<$Res, $Val extends ArticlesState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      results: null == results
-          ? _value.results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<ArticleModel>,
     ) as $Val);
   }
 }
@@ -76,7 +76,7 @@ abstract class _$$ArticlesStateImplCopyWith<$Res>
       __$$ArticlesStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Status status, String? errorMessage, List<ArticleModel> results});
+  $Res call({List<ArticleModel> results, Status status, String? errorMessage});
 }
 
 /// @nodoc
@@ -90,11 +90,15 @@ class __$$ArticlesStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? results = null,
     Object? status = null,
     Object? errorMessage = freezed,
-    Object? results = null,
   }) {
     return _then(_$ArticlesStateImpl(
+      results: null == results
+          ? _value._results
+          : results // ignore: cast_nullable_to_non_nullable
+              as List<ArticleModel>,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -103,10 +107,6 @@ class __$$ArticlesStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      results: null == results
-          ? _value._results
-          : results // ignore: cast_nullable_to_non_nullable
-              as List<ArticleModel>,
     ));
   }
 }
@@ -115,15 +115,11 @@ class __$$ArticlesStateImplCopyWithImpl<$Res>
 
 class _$ArticlesStateImpl implements _ArticlesState {
   _$ArticlesStateImpl(
-      {required this.status,
-      required this.errorMessage,
-      required final List<ArticleModel> results})
+      {required final List<ArticleModel> results,
+      required this.status,
+      required this.errorMessage})
       : _results = results;
 
-  @override
-  final Status status;
-  @override
-  final String? errorMessage;
   final List<ArticleModel> _results;
   @override
   List<ArticleModel> get results {
@@ -133,8 +129,13 @@ class _$ArticlesStateImpl implements _ArticlesState {
   }
 
   @override
+  final Status status;
+  @override
+  final String? errorMessage;
+
+  @override
   String toString() {
-    return 'ArticlesState(status: $status, errorMessage: $errorMessage, results: $results)';
+    return 'ArticlesState(results: $results, status: $status, errorMessage: $errorMessage)';
   }
 
   @override
@@ -142,15 +143,15 @@ class _$ArticlesStateImpl implements _ArticlesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ArticlesStateImpl &&
+            const DeepCollectionEquality().equals(other._results, _results) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage) &&
-            const DeepCollectionEquality().equals(other._results, _results));
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, errorMessage,
-      const DeepCollectionEquality().hash(_results));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_results), status, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -161,16 +162,16 @@ class _$ArticlesStateImpl implements _ArticlesState {
 
 abstract class _ArticlesState implements ArticlesState {
   factory _ArticlesState(
-      {required final Status status,
-      required final String? errorMessage,
-      required final List<ArticleModel> results}) = _$ArticlesStateImpl;
+      {required final List<ArticleModel> results,
+      required final Status status,
+      required final String? errorMessage}) = _$ArticlesStateImpl;
 
+  @override
+  List<ArticleModel> get results;
   @override
   Status get status;
   @override
   String? get errorMessage;
-  @override
-  List<ArticleModel> get results;
   @override
   @JsonKey(ignore: true)
   _$$ArticlesStateImplCopyWith<_$ArticlesStateImpl> get copyWith =>

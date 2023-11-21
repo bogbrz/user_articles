@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeState {
   List<AuthorModel> get results => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
-  String get errorMessage => throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({List<AuthorModel> results, Status status, String errorMessage});
+  $Res call({List<AuthorModel> results, Status status, String? errorMessage});
 }
 
 /// @nodoc
@@ -48,7 +48,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? results = null,
     Object? status = null,
-    Object? errorMessage = null,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
       results: null == results
@@ -59,10 +59,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      errorMessage: null == errorMessage
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -75,7 +75,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<AuthorModel> results, Status status, String errorMessage});
+  $Res call({List<AuthorModel> results, Status status, String? errorMessage});
 }
 
 /// @nodoc
@@ -91,7 +91,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? results = null,
     Object? status = null,
-    Object? errorMessage = null,
+    Object? errorMessage = freezed,
   }) {
     return _then(_$HomeStateImpl(
       results: null == results
@@ -102,10 +102,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      errorMessage: null == errorMessage
+      errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -130,7 +130,7 @@ class _$HomeStateImpl implements _HomeState {
   @override
   final Status status;
   @override
-  final String errorMessage;
+  final String? errorMessage;
 
   @override
   String toString() {
@@ -163,14 +163,14 @@ abstract class _HomeState implements HomeState {
   factory _HomeState(
       {required final List<AuthorModel> results,
       required final Status status,
-      required final String errorMessage}) = _$HomeStateImpl;
+      required final String? errorMessage}) = _$HomeStateImpl;
 
   @override
   List<AuthorModel> get results;
   @override
   Status get status;
   @override
-  String get errorMessage;
+  String? get errorMessage;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>

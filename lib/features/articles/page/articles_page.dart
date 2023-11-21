@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_articles/app/core/enums.dart';
-import 'package:user_articles/data/remote_data_sources/articles_remote_data_source.dart';
+import 'package:user_articles/app/injection_container.dart';
 import 'package:user_articles/domain/models/article_model.dart';
 import 'package:user_articles/domain/models/author_model.dart';
-import 'package:user_articles/domain/repositories/articles_repository.dart';
 import 'package:user_articles/features/articles/cubit/articles_cubit.dart';
+import 'package:user_articles/features/articles/page/widgets/article_content_widget.dart';
+import 'package:user_articles/features/articles/page/widgets/cubit/articles_content_cubit.dart';
 
 class ArticlesPage extends StatelessWidget {
   const ArticlesPage({
@@ -21,14 +22,18 @@ class ArticlesPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(author.name),
       ),
-      body: BlocProvider<ArticlesCubit>(
-        create: (context) => ArticlesCubit(
-          articlesRepository: ArticlesRepository(
-            remoteDataSource: ArticlesRemoteDioDataSource(),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider<ArticlesCubit>(
+            create: (context) => getIt<ArticlesCubit>()
+              ..fetchData(
+                authorId: author.id,
+              ),
           ),
-        )..fetchData(
-            authorId: author.id,
+          BlocProvider(
+            create: (context) => getIt<ArticlesContentCubit>(),
           ),
+        ],
         child: Column(
           children: [
             Padding(
@@ -100,7 +105,15 @@ class _ArticleItemWidget extends StatelessWidget {
         vertical: 10,
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: ((context) => ArticleContentWidget(
+                    articleContent: model,
+                  )),
+            ),
+          );
+        },
         child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
